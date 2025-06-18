@@ -1,22 +1,14 @@
 const submitBtn = document.getElementById("submit-btn");
-const btn = document.getElementById("btn");
-const ratingButtons = document.querySelectorAll("rating-container button");
-const popup = document.querySelector("popup");
-const overlay = document.getElementById("overlay");
+const ratingButtons = document.querySelectorAll("#rating-container button");
 const card = document.querySelector(".card");
+const thanksPopup = document.querySelector(".thanks-popup");
 let userRating = null;
 
-/* -----------------------------------------maybe not needed??????
 function togglePopup() {
-    popup.classList.toggle("show");
-    overlay.classList.toggle("show");
-    if(popup.classList.toggle === "show"){
-        card.style.display = "none";
-    } else {
-        card.style.display = "flex";
-    }
+    thanksPopup.classList.toggle("show");
+    thanksPopup.style.display = "flex"
+    card.style.display = thanksPopup.classList.contains("show") ? "none" : "flex";
 }
-*/
 
 ratingButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -26,10 +18,15 @@ ratingButtons.forEach((btn) => {
 
 submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
-    if (selectedRating) {
-        //show popup and update text "you selected X out of 5"
+    
+    if (userRating) {
+        thanksPopup.innerHTML = `
+        <img src="illustration-thank-you.svg" alt="mobile phone icon">
+        <p class="show-rating">You selected ${userRating} out of 5<p>
+        <h1>Thank you!</h1>
+        <p class="thanks-message">We appreciate you taking the time to give a rating. If you ever need more support, don't hesitate to get in touch!</p>`
+        togglePopup()
     } else {
-        return;
+        alert("No rating selected.");
     }
 });
